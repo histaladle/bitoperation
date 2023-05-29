@@ -1,16 +1,16 @@
-void midbit(char *src,char *dst,int start_bit,int end_bit)
+void midbit(char *src,char *dst,int start_bit,int last_bit)
 {
     int start_ch=start_bit/8;
-    int end_ch=end_bit/8;
+    int end_ch=last_bit/8;
     int ch_len=end_ch-start_ch+1;
     int bit_ofs=start_bit%8;
     char neg_mask;
     int i=0;
-	if(start_bit>end_bit)
+    if(start_bit>last_bit)
 	{
 		return;
 	}
-    for(i=0;i<ch_len;++i)
+    for(i=0;i<ch_len;i++)
 	{
 		if(i>0)
 		{
@@ -39,7 +39,7 @@ void movebit(char *src,int src_bit_ofs,char *dst,int dst_bit_ofs,int bit_width)
 	{
 		return;
 	}
-    for(i=0;i<bit_width;++i)
+    for(i=0;i<bit_width;i++)
 	{
 		s_ch_idx=(src_bit_ofs+i)/8;
 		d_ch_idx=(dst_bit_ofs+i)/8;
@@ -75,32 +75,32 @@ void swap_bit(char *data1,int bit1,char *data2,int bit2)
 	data1[ch_idx1]|=((ch2>>bit_ofs2)&0x01)<<bit_ofs1;
 }
 
-void reverse_bit_order(char *data,int start_bit,int end_bit)
+void reverse_bit_order(char *data,int start_bit,int last_bit)
 {
-    int bit_len=end_bit-start_bit+1;
-    int center_bit=(start_bit+end_bit)/2;
+    int bit_len=last_bit-start_bit+1;
+    int center_bit=(start_bit+last_bit)/2;
     int i=0;
-	if(start_bit>end_bit)
+    if(start_bit>last_bit)
 	{
 		return;
 	}
-    for(i=0;i<bit_len/2;++i)
+    for(i=0;i<bit_len/2;i++)
 	{
 		swap_bit(data,center_bit-i,data,center_bit+i+(bit_len+1)%2);
 	}
 }
 
-void reverse_byte_order(char *data,int start_byte,int end_byte)
+void reverse_byte_order(char *data,int start_byte,int last_byte)
 {
-    int byte_len=end_byte-start_byte+1;
-    int center_byte=(start_byte+end_byte)/2;
+    int byte_len=last_byte-start_byte+1;
+    int center_byte=(start_byte+last_byte)/2;
     char ch;
     int i=0;
-	if(start_byte>end_byte)
+    if(start_byte>last_byte)
 	{
 		return;
 	}
-    for(i=0;i<byte_len/2;++i)
+    for(i=0;i<byte_len/2;i++)
 	{
 		ch=data[center_byte-i];
 		data[center_byte-i]=data[center_byte+i+(byte_len+1)%2];
@@ -108,22 +108,22 @@ void reverse_byte_order(char *data,int start_byte,int end_byte)
 	}
 }
 
-void movebyte(char *data,int start_byte,int end_byte,int offset)
+void movebyte(char *data,int start_byte,int last_byte,int offset)
 {
     int i=0;
-    if(start_byte>end_byte)
+    if(start_byte>last_byte)
     {
         return;
     }
     if(offset>0)
     {
-        for(i=end_byte;i>=start_byte;--i)
+        for(i=last_byte;i>=start_byte;i--)
         {
             data[i+offset]=data[i];
         }
     }
     else {
-        for(i=start_byte;i<=end_byte;++i)
+        for(i=start_byte;i<=last_byte;i++)
         {
             data[i+offset]=data[i];
         }

@@ -1,12 +1,12 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include <QDebug>
-void midbit(char *src,char *dst,int start_bit,int end_bit);
+void midbit(char *src,char *dst,int start_bit,int last_bit);
 void movebit(char *src,int src_bit_ofs,char *dst,int dst_bit_ofs,int bit_width);
 void swap_bit(char *data1,int bit1,char *data2,int bit2);
-void reverse_bit_order(char *data,int start_bit,int end_bit);
-void reverse_byte_order(char *data,int start_byte,int end_byte);
-void movebyte(char *data,int start_byte,int end_byte,int offset);
+void reverse_bit_order(char *data,int start_bit,int last_bit);
+void reverse_byte_order(char *data,int start_byte,int last_byte);
+void movebyte(char *data,int start_byte,int last_byte,int offset);
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
